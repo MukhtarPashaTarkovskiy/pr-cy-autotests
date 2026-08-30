@@ -1,7 +1,5 @@
 package tests;
-
 import org.testng.annotations.Test;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -9,11 +7,12 @@ public class LoginTest extends BaseTest {
 
     private String password = "secret_sauce";
     private String username = "standard_user";
+    private String wrongPassword = "wrongPassword";
 
     @Test
     public void invalidLoginShowsErrorMessage() {
         loginPage.open();
-        loginPage.login("12345", "wrongPassword");
+        loginPage.login("12345", wrongPassword);
         String expectedMessage = "Epic sadface: Username and password do not match any user in this service";
         assertTrue(loginPage.isErrorMessageVisible(), "Error message is not visible");
         assertEquals(loginPage.getErrorMessage(), expectedMessage, "Incorrect error message for invalid login");
@@ -22,7 +21,7 @@ public class LoginTest extends BaseTest {
     @Test
     public void invalidPasswordShowsErrorMessage() {
         loginPage.open();
-        loginPage.login(username, "wrongPassword");
+        loginPage.login(username, wrongPassword);
         assertTrue(loginPage.isErrorMessageVisible(), "Error message is not visible");
         assertEquals(loginPage.getErrorMessage(), "Epic sadface: Username and password do not match any user in this service",
                 "Incorrect error message for invalid password");
