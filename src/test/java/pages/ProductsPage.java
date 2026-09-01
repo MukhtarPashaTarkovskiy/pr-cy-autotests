@@ -4,22 +4,20 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
-public class ProductsPage {
-    WebDriver driver;
-    WebDriverWait wait;
+public class ProductsPage extends BasePage{
+
     private final By pageTitle = By.cssSelector("[data-test='title']");
 
     public ProductsPage(WebDriver driver, WebDriverWait wait) {
-        this.driver = driver;
-        this.wait = wait;
+       super(driver,wait);
     }
 
-    @Test
+
     public boolean isProductsPageVisible() {
         return driver.findElement(pageTitle).isDisplayed();
     }
 
-    @Test
+
     public String getTitle() {
         return driver.findElement(pageTitle).getText();
     }

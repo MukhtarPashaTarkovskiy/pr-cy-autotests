@@ -4,22 +4,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class LoginPage {
-    WebDriver driver;
-    WebDriverWait wait;
+public class LoginPage extends BasePage{
 
-    private final By loginInput = By.cssSelector("#user-name");
-    private final By passwordInput = By.cssSelector("#password");
+    private final By loginInput = By.cssSelector(ID_PATTERN.formatted("user-name"));
+    private final By passwordInput = By.cssSelector(ID_PATTERN.formatted("password"));
     private final By loginButton = By.id("login-button");
     private final By errorMessageLocator = By.xpath("//h3[@data-test='error']");
 
     public LoginPage(WebDriver driver, WebDriverWait wait) {
-        this.driver = driver;
-        this.wait = wait;
-    }
-
-    public void open() {
-        driver.get("https://www.saucedemo.com/");
+        super(driver, wait);
     }
 
     public void login(String username, String password) {
