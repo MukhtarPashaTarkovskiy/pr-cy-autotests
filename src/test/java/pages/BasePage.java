@@ -5,7 +5,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class BasePage {
     WebDriver driver;
     WebDriverWait wait;
-    public static final String Base_URL = "https://www.saucedemo.com/";
+    public static final String BASE_URL = "https://www.saucedemo.com/";
     public static final String ID_PATTERN = "#%s";
 
     public BasePage(WebDriver driver, WebDriverWait wait) {
@@ -14,6 +14,6 @@ public class BasePage {
     }
 
     public void open() {
-        driver.get(Base_URL);
+        driver.get(BASE_URL);
     }
 }
