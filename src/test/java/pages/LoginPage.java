@@ -1,10 +1,11 @@
 package pages;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class LoginPage extends BasePage{
+public class LoginPage extends BasePage {
 
     private final By loginInput = By.cssSelector(ID_PATTERN.formatted("user-name"));
     private final By passwordInput = By.cssSelector(ID_PATTERN.formatted("password"));
@@ -22,7 +23,7 @@ public class LoginPage extends BasePage{
     }
 
     public boolean isErrorMessageVisible() {
-       return wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessageLocator)).isDisplayed();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessageLocator)).isDisplayed();
     }
 
     public String getErrorMessage() {
