@@ -16,10 +16,22 @@ public class LoginPage extends BasePage {
         super(driver, wait);
     }
 
-    public void login(String username, String password) {
+    public void enterUsername(String username) {
         driver.findElement(loginInput).sendKeys(username);
+    }
+
+    public void enterPassword(String password) {
         driver.findElement(passwordInput).sendKeys(password);
+    }
+
+    public void clickLoginButton() {
         driver.findElement(loginButton).click();
+    }
+
+    public void login(String username, String password) {
+        enterUsername(username);
+        enterPassword(password);
+        clickLoginButton();
     }
 
     public boolean isErrorMessageVisible() {
