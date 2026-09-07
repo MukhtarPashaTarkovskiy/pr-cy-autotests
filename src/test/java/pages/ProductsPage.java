@@ -24,9 +24,7 @@ public class ProductsPage extends BasePage {
     }
 
     public String getTitle() {
-        return wait.until(
-                ExpectedConditions.visibilityOfElementLocated(pageTitle)
-        ).getText();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(pageTitle)).getText();
     }
 
     public void addGoodsToCart(String productName) {
