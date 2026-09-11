@@ -6,16 +6,17 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import pages.CartPage;
 import pages.LoginPage;
 import pages.ProductsPage;
 
 import java.time.Duration;
-
 public class BaseTest {
     WebDriver driver;
     WebDriverWait wait;
     LoginPage loginPage;
     ProductsPage productsPage;
+    CartPage cartPage;
 
     @BeforeMethod
     public void openBrowser() {
@@ -26,6 +27,7 @@ public class BaseTest {
         wait = new WebDriverWait(driver, Duration.ofSeconds(6));
         loginPage = new LoginPage(driver, wait);
         productsPage = new ProductsPage(driver, wait);
+        cartPage = new CartPage(driver, wait);
     }
 
     @AfterMethod

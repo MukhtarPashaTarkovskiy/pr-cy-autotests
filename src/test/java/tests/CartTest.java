@@ -1,21 +1,22 @@
 package tests;
 
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import java.util.List;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
-public class ProductsTest extends BaseTest {
+import static org.testng.Assert.*;
 
+public class CartTest extends BaseTest {
+    private final String username = "standard_user";
+    private final String password = "secret_sauce";
     private final List<String> goodsList = List.of(
             "Sauce Labs Backpack", "Sauce Labs Bolt T-Shirt", "Sauce Labs Onesie",
             "Sauce Labs Bike Light", "Sauce Labs Fleece Jacket", "Test.allTheThings() T-Shirt (Red)"
     );
-    private final String username = "standard_user";
-    private final String password = "secret_sauce";
 
     @Test
-    public void checkGoodsAdded() {
+    public void checkGoodsInCart() {
+        SoftAssert soft = new SoftAssert();
         loginPage.open();
         loginPage.login(username, password);
         assertTrue(productsPage.isProductsPageVisible());
@@ -25,8 +26,11 @@ public class ProductsTest extends BaseTest {
             productsPage.addGoodsToCart(good);
         }
 
-        assertTrue(productsPage.isShoppingCartVisible());
-        assertEquals(productsPage.getShoppingCartBadge(), String.valueOf(goodsList.size()));
-        assertEquals(productsPage.getCounterColor(), "rgb(226, 35, 26)");
+        productsPage.switchToCart();
+        List<String> actualGoods = cartPage.getProductsNames();
+        soft.assertFalse(actualGoods.isEmpty());
+        soft.assertEquals(actualGoods.size(), goodsList.size());
+        soft.assertEquals(actualGoods, goodsList);
+        soft.assertAll();
     }
 }

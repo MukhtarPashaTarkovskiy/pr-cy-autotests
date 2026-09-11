@@ -14,6 +14,7 @@ public class ProductsPage extends BasePage {
     private final By cartBadge = By.cssSelector("[data-test='shopping-cart-badge']");
     private final By pageTitle = By.cssSelector("[data-test='title']");
     private final By shoppingCart = By.id("shopping_cart_container");
+    private final By cartLink = By.cssSelector(DATA_TEST_PATTERN.formatted("shopping-cart-link"));
 
     public ProductsPage(WebDriver driver, WebDriverWait wait) {
         super(driver, wait);
@@ -48,5 +49,9 @@ public class ProductsPage extends BasePage {
     public String getCounterColor() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(cartBadge))
                 .getCssValue("background-color");
+    }
+
+    public void switchToCart() {
+        wait.until(ExpectedConditions.elementToBeClickable(cartLink)).click();
     }
 }
