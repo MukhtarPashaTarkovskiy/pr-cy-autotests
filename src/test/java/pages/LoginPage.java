@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import user.User;
 
 public class LoginPage extends BasePage {
 
@@ -28,9 +29,9 @@ public class LoginPage extends BasePage {
         driver.findElement(loginButton).click();
     }
 
-    public void login(String username, String password) {
-        enterUsername(username);
-        enterPassword(password);
+    public void login(User user) {
+        enterUsername(user.getUser());
+        enterPassword(user.getPassword());
         clickLoginButton();
     }
 

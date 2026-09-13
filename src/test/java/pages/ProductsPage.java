@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.Color;
 
 public class ProductsPage extends BasePage {
 
@@ -47,8 +48,9 @@ public class ProductsPage extends BasePage {
     }
 
     public String getCounterColor() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(cartBadge))
+        String cssColor = wait.until(ExpectedConditions.visibilityOfElementLocated(cartBadge))
                 .getCssValue("background-color");
+        return Color.fromString(cssColor).asRgb();
     }
 
     public void switchToCart() {

@@ -1,6 +1,9 @@
 package tests;
 
+import enums.TitleNamiing;
 import org.testng.annotations.Test;
+import user.UserFactory;
+
 import java.util.List;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -11,15 +14,14 @@ public class ProductsTest extends BaseTest {
             "Sauce Labs Backpack", "Sauce Labs Bolt T-Shirt", "Sauce Labs Onesie",
             "Sauce Labs Bike Light", "Sauce Labs Fleece Jacket", "Test.allTheThings() T-Shirt (Red)"
     );
-    private final String username = "standard_user";
-    private final String password = "secret_sauce";
 
     @Test
     public void checkGoodsAdded() {
+        System.out.println("Second thread: " + Thread.currentThread().getId());
         loginPage.open();
-        loginPage.login(username, password);
+        loginPage.login(UserFactory.withAdminPermission());
         assertTrue(productsPage.isProductsPageVisible());
-        assertEquals(productsPage.getTitle(), "Products");
+        assertEquals(productsPage.getTitle(), TitleNamiing.PRODUCTES.getDisplayName());
 
         for (String good : goodsList) {
             productsPage.addGoodsToCart(good);
@@ -27,6 +29,6 @@ public class ProductsTest extends BaseTest {
 
         assertTrue(productsPage.isShoppingCartVisible());
         assertEquals(productsPage.getShoppingCartBadge(), String.valueOf(goodsList.size()));
-        assertEquals(productsPage.getCounterColor(), "rgb(226, 35, 26)");
+        assertEquals(productsPage.getCounterColor(), TitleNamiing.CART_COUNTER_COLOR.getDisplayName());
     }
 }
