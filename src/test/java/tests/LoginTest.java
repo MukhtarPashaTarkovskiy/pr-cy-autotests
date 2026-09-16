@@ -1,13 +1,15 @@
 package tests;
 
+import io.qameta.allure.*;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import user.User;
 import user.UserFactory;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+@Epic("Авторизация")
+@Feature("Вход в систему")
 public class LoginTest extends BaseTest {
 
     @DataProvider(name = "invalidLoginData")
@@ -40,9 +42,11 @@ public class LoginTest extends BaseTest {
         };
     }
 
+    @Story("Неуспешная авторизация")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Проверка отображения корректного сообщения об ошибке при авторизации с невалидными данными")
     @Test(dataProvider = "invalidLoginData")
     public void invalidLoginShowsErrorMessage(User user, String expectedMessage) {
-        System.out.println("First thread: " + Thread.currentThread().getId());
         loginPage.open();
         loginPage.login(user);
         assertTrue(loginPage.isErrorMessageVisible(), "Error message is not visible");
@@ -61,9 +65,11 @@ public class LoginTest extends BaseTest {
         };
     }
 
+    @Story("Успешная авторизация")
+    @Severity(SeverityLevel.BLOCKER)
+    @Description("Проверка успешной авторизации пользователя и перехода на страницу Products")
     @Test(dataProvider = "validLoginData")
     public void validUserCanLogin(User user, String expectedTitle) {
-        System.out.println("First thread: " + Thread.currentThread().getId());
         loginPage.open();
         loginPage.login(user);
         assertTrue(productsPage.isProductsPageVisible());

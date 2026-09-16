@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.PropertyReader;
@@ -16,6 +17,7 @@ public class BasePage {
         this.wait = wait;
     }
 
+    @Step("Открываем страницу")
     public void open() {
         driver.get(BASE_URL);
     }

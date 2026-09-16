@@ -1,13 +1,15 @@
 package tests;
 
 import enums.TitleNamiing;
+import io.qameta.allure.*;
 import org.testng.annotations.Test;
 import user.UserFactory;
-
 import java.util.List;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+@Epic("Каталог товаров")
+@Feature("Добавление товаров в корзину")
 public class ProductsTest extends BaseTest {
 
     private final List<String> goodsList = List.of(
@@ -15,9 +17,11 @@ public class ProductsTest extends BaseTest {
             "Sauce Labs Bike Light", "Sauce Labs Fleece Jacket", "Test.allTheThings() T-Shirt (Red)"
     );
 
+    @Story("Добавление товаров в корзину")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Проверка добавления товаров в корзину, количества товаров и отображения счётчика корзины")
     @Test
     public void checkGoodsAdded() {
-        System.out.println("Second thread: " + Thread.currentThread().getId());
         loginPage.open();
         loginPage.login(UserFactory.withAdminPermission());
         assertTrue(productsPage.isProductsPageVisible());
