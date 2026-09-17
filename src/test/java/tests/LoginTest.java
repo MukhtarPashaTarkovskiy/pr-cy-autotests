@@ -1,51 +1,54 @@
 package tests;
 
+import io.qameta.allure.*;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
+import user.User;
+import user.UserFactory;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+@Epic("Авторизация")
+@Feature("Вход в систему")
 public class LoginTest extends BaseTest {
-
-    private String password = "secret_sauce";
-    private String username = "standard_user";
-    private String wrongPassword = "wrongPassword";
 
     @DataProvider(name = "invalidLoginData")
     public Object[][] invalidLoginData() {
         return new Object[][]{
                 {
-                        "12345", wrongPassword,
+                        new User("12345", wrongPassword),
                         "Epic sadface: Username and password do not match any user in this service"
                 },
                 {
-                        username, wrongPassword,
+                        new User(UserFactory.withAdminPermission().getUser(), wrongPassword),
                         "Epic sadface: Username and password do not match any user in this service"
                 },
                 {
-                        "", password,
+                        new User("", password),
                         "Epic sadface: Username is required"
                 },
                 {
-                        username, "",
+                        new User(UserFactory.withAdminPermission().getUser(), ""),
                         "Epic sadface: Password is required"
                 },
                 {
-                        "locked_out_user", password,
+                        UserFactory.withLockedPermission(),
                         "Epic sadface: Sorry, this user has been locked out."
                 },
                 {
-                        "", "",
+                        new User("", ""),
                         "Epic sadface: Username is required"
                 }
         };
     }
 
+    @Story("Неуспешная авторизация")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Проверка отображения корректного сообщения об ошибке при авторизации с невалидными данными")
     @Test(dataProvider = "invalidLoginData")
-    public void invalidLoginShowsErrorMessage(String username, String password, String expectedMessage) {
+    public void invalidLoginShowsErrorMessage(User user, String expectedMessage) {
         loginPage.open();
-        loginPage.login(username, password);
+        loginPage.login(user);
         assertTrue(loginPage.isErrorMessageVisible(), "Error message is not visible");
         assertEquals(loginPage.getErrorMessage(), expectedMessage, "Incorrect error message for invalid login");
     }
@@ -54,18 +57,21 @@ public class LoginTest extends BaseTest {
     public Object[][] validLoginData() {
 
         return new Object[][]{
-                {"problem_user", password, "Products"},
-                {"performance_glitch_user", password, "Products"},
-                {"error_user", password, "Products"},
-                {"visual_user", password, "Products"},
-                {"standard_user", password, "Products"}
+                {new User("problem_user", password), "Products"},
+                {new User("performance_glitch_user", password), "Products"},
+                {new User("error_user", password), "Products"},
+                {new User("visual_user", password), "Products"},
+                {UserFactory.withAdminPermission(), "Products"}
         };
     }
 
+    @Story("Успешная авторизация")
+    @Severity(SeverityLevel.BLOCKER)
+    @Description("Проверка успешной авторизации пользователя и перехода на страницу Products")
     @Test(dataProvider = "validLoginData")
-    public void validUserCanLogin(String username, String password, String expectedTitle) {
+    public void validUserCanLogin(User user, String expectedTitle) {
         loginPage.open();
-        loginPage.login(username, password);
+        loginPage.login(user);
         assertTrue(productsPage.isProductsPageVisible());
         assertEquals(productsPage.getTitle(), expectedTitle);
     }

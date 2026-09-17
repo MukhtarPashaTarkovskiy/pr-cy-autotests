@@ -1,25 +1,32 @@
 package tests;
 
+import enums.TitleNaming;
+import io.qameta.allure.*;
 import org.testng.annotations.Test;
+import user.UserFactory;
 import java.util.List;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+@Epic("Каталог товаров")
+@Feature("Добавление товаров в корзину")
 public class ProductsTest extends BaseTest {
 
+    private static final String CART_COUNTER_COLOR = "rgb(226, 35, 26)";
     private final List<String> goodsList = List.of(
             "Sauce Labs Backpack", "Sauce Labs Bolt T-Shirt", "Sauce Labs Onesie",
             "Sauce Labs Bike Light", "Sauce Labs Fleece Jacket", "Test.allTheThings() T-Shirt (Red)"
     );
-    private final String username = "standard_user";
-    private final String password = "secret_sauce";
 
+    @Story("Добавление товаров в корзину")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Проверка добавления товаров в корзину, количества товаров и отображения счётчика корзины")
     @Test
     public void checkGoodsAdded() {
         loginPage.open();
-        loginPage.login(username, password);
+        loginPage.login(UserFactory.withAdminPermission());
         assertTrue(productsPage.isProductsPageVisible());
-        assertEquals(productsPage.getTitle(), "Products");
+        assertEquals(productsPage.getTitle(), TitleNaming.PRODUCTS.getDisplayName());
 
         for (String good : goodsList) {
             productsPage.addGoodsToCart(good);
@@ -27,6 +34,6 @@ public class ProductsTest extends BaseTest {
 
         assertTrue(productsPage.isShoppingCartVisible());
         assertEquals(productsPage.getShoppingCartBadge(), String.valueOf(goodsList.size()));
-        assertEquals(productsPage.getCounterColor(), "rgb(226, 35, 26)");
+        assertEquals(productsPage.getCounterColor(), CART_COUNTER_COLOR);
     }
 }
