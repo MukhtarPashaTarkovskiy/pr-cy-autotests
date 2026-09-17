@@ -1,6 +1,6 @@
 package tests;
 
-import enums.TitleNamiing;
+import enums.TitleNaming;
 import io.qameta.allure.*;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -26,7 +26,7 @@ public class CartTest extends BaseTest {
         loginPage.open();
         loginPage.login(UserFactory.withAdminPermission());
         assertTrue(productsPage.isProductsPageVisible());
-        assertEquals(productsPage.getTitle(), TitleNamiing.PRODUCTES.getDisplayName());
+        assertEquals(productsPage.getTitle(), TitleNaming.PRODUCTS.getDisplayName());
 
         for (String good : goodsList) {
             productsPage.addGoodsToCart(good);

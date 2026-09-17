@@ -1,6 +1,6 @@
 package tests;
 
-import enums.TitleNamiing;
+import enums.TitleNaming;
 import io.qameta.allure.*;
 import org.testng.annotations.Test;
 import user.UserFactory;
@@ -12,6 +12,7 @@ import static org.testng.Assert.assertTrue;
 @Feature("Добавление товаров в корзину")
 public class ProductsTest extends BaseTest {
 
+    private static final String CART_COUNTER_COLOR = "rgb(226, 35, 26)";
     private final List<String> goodsList = List.of(
             "Sauce Labs Backpack", "Sauce Labs Bolt T-Shirt", "Sauce Labs Onesie",
             "Sauce Labs Bike Light", "Sauce Labs Fleece Jacket", "Test.allTheThings() T-Shirt (Red)"
@@ -25,7 +26,7 @@ public class ProductsTest extends BaseTest {
         loginPage.open();
         loginPage.login(UserFactory.withAdminPermission());
         assertTrue(productsPage.isProductsPageVisible());
-        assertEquals(productsPage.getTitle(), TitleNamiing.PRODUCTES.getDisplayName());
+        assertEquals(productsPage.getTitle(), TitleNaming.PRODUCTS.getDisplayName());
 
         for (String good : goodsList) {
             productsPage.addGoodsToCart(good);
@@ -33,6 +34,6 @@ public class ProductsTest extends BaseTest {
 
         assertTrue(productsPage.isShoppingCartVisible());
         assertEquals(productsPage.getShoppingCartBadge(), String.valueOf(goodsList.size()));
-        assertEquals(productsPage.getCounterColor(), TitleNamiing.CART_COUNTER_COLOR.getDisplayName());
+        assertEquals(productsPage.getCounterColor(), CART_COUNTER_COLOR);
     }
 }
