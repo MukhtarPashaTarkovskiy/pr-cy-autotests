@@ -5,18 +5,14 @@
     <test name="Thread 1">
         <classes>
             <class name="tests.LoginTest"/>
-
         </classes>
-
-    </test> <!-- Test -->
+    </test>
 
     <test name="Thread 2">
         <classes>
             <class name="tests.ProductsTest"/>
             <class name="tests.CartTest"/>
-
         </classes>
-
     </test>
 
 </suite>
