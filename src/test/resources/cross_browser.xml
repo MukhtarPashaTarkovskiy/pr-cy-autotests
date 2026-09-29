@@ -1,0 +1,17 @@
+<suite thread-count="2" name="pr-cy-autotests" parallel="classes">
+    <test name="Chrome">
+        <classes>
+            <class name="tests.LoginTest"/>
+            <parameter name="browser" value="chrome"/>
+        </classes>
+    </test>
+    <!--  Test  -->
+    <test name="Firefox">
+        <classes>
+            <class name="tests.ProductsTest"/>
+            <class name="tests.CartTest"/>
+            <parameter name="browser" value="firefox"/>
+        </classes>
+    </test>
+    <!--  Test  -->
+</suite>
