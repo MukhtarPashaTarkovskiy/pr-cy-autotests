@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import user.UserFactory;
 import java.util.List;
-
 import static org.testng.Assert.*;
 
 @Epic("Корзина")
