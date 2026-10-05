@@ -16,9 +16,10 @@ import pages.LoginPage;
 import pages.ProductsPage;
 import utils.PropertyReader;
 import utils.TestListener;
+
 import java.time.Duration;
 
-@Listeners({AllureTestNg.class,TestListener.class})
+@Listeners({AllureTestNg.class, TestListener.class})
 public class BaseTest {
     WebDriver driver;
     WebDriverWait wait;
@@ -31,10 +32,18 @@ public class BaseTest {
     @Parameters("browser")
     @BeforeMethod
     public void openBrowser(@Optional("chrome") String browser, ITestContext context) {
-        if(browser.equalsIgnoreCase("chrome")) {
+        if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
+
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--incognito");
+
+            if (System.getenv("GITHUB_ACTIONS") != null) {
+                options.addArguments("--headless=new");
+                options.addArguments("--no-sandbox");
+                options.addArguments("--disable-dev-shm-usage");
+            }
+
             driver = new ChromeDriver(options);
             driver.manage().window().maximize();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
