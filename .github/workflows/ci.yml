@@ -21,6 +21,8 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Build and run tests
+        env:
+          NEON_DB_PASSWORD: ${{ secrets.NEON_DB_PASSWORD }}
         run: mvn clean test
 
       - name: Generate Allure report
